@@ -232,7 +232,16 @@ export default function AssetsSection({ activePreset }: AssetsSectionProps) {
         </div>
 
         {/* Right Output Card with Desktop Slide-out Preview Panel */}
-        <div className={`assets-card-wrapper ${hoveredAsset ? "has-preview" : ""}`}>
+        <div 
+          className={`assets-card-wrapper ${hoveredAsset ? "has-preview" : ""}`}
+          onMouseLeave={() => setHoveredAsset(null)}
+        >
+          {hoveredAsset && (
+            <div 
+              className="preview-mobile-backdrop" 
+              onClick={() => setHoveredAsset(null)} 
+            />
+          )}
           <div className="output-card">
             <div className="card-header">
               <span className="card-header-title">
@@ -247,9 +256,8 @@ export default function AssetsSection({ activePreset }: AssetsSectionProps) {
               <div 
                 className={`output-row ${hoveredAsset === "seo" ? "hovered" : ""}`}
                 onMouseEnter={() => setHoveredAsset("seo")}
-                onMouseLeave={() => setHoveredAsset(null)}
                 onFocus={() => setHoveredAsset("seo")}
-                onBlur={() => setHoveredAsset(null)}
+                onClick={() => setHoveredAsset("seo")}
                 tabIndex={0}
               >
                 <div className="row-label">
@@ -267,9 +275,8 @@ export default function AssetsSection({ activePreset }: AssetsSectionProps) {
               <div 
                 className={`output-row ${hoveredAsset === "blog" ? "hovered" : ""}`}
                 onMouseEnter={() => setHoveredAsset("blog")}
-                onMouseLeave={() => setHoveredAsset(null)}
                 onFocus={() => setHoveredAsset("blog")}
-                onBlur={() => setHoveredAsset(null)}
+                onClick={() => setHoveredAsset("blog")}
                 tabIndex={0}
               >
                 <div className="row-label">
@@ -286,9 +293,8 @@ export default function AssetsSection({ activePreset }: AssetsSectionProps) {
               <div 
                 className={`output-row ${hoveredAsset === "linkedin" ? "hovered" : ""}`}
                 onMouseEnter={() => setHoveredAsset("linkedin")}
-                onMouseLeave={() => setHoveredAsset(null)}
                 onFocus={() => setHoveredAsset("linkedin")}
-                onBlur={() => setHoveredAsset(null)}
+                onClick={() => setHoveredAsset("linkedin")}
                 tabIndex={0}
               >
                 <div className="row-label">
@@ -305,9 +311,8 @@ export default function AssetsSection({ activePreset }: AssetsSectionProps) {
               <div 
                 className={`output-row ${hoveredAsset === "instagram" ? "hovered" : ""}`}
                 onMouseEnter={() => setHoveredAsset("instagram")}
-                onMouseLeave={() => setHoveredAsset(null)}
                 onFocus={() => setHoveredAsset("instagram")}
-                onBlur={() => setHoveredAsset(null)}
+                onClick={() => setHoveredAsset("instagram")}
                 tabIndex={0}
               >
                 <div className="row-label">
@@ -326,9 +331,8 @@ export default function AssetsSection({ activePreset }: AssetsSectionProps) {
               <div 
                 className={`output-row ${hoveredAsset === "replies" ? "hovered" : ""}`}
                 onMouseEnter={() => setHoveredAsset("replies")}
-                onMouseLeave={() => setHoveredAsset(null)}
                 onFocus={() => setHoveredAsset("replies")}
-                onBlur={() => setHoveredAsset(null)}
+                onClick={() => setHoveredAsset("replies")}
                 tabIndex={0}
               >
                 <div className="row-label">
@@ -345,9 +349,8 @@ export default function AssetsSection({ activePreset }: AssetsSectionProps) {
               <div 
                 className={`output-row ${hoveredAsset === "faqs" ? "hovered" : ""}`}
                 onMouseEnter={() => setHoveredAsset("faqs")}
-                onMouseLeave={() => setHoveredAsset(null)}
                 onFocus={() => setHoveredAsset("faqs")}
-                onBlur={() => setHoveredAsset(null)}
+                onClick={() => setHoveredAsset("faqs")}
                 tabIndex={0}
               >
                 <div className="row-label">
@@ -366,9 +369,8 @@ export default function AssetsSection({ activePreset }: AssetsSectionProps) {
               <div 
                 className={`output-row ${hoveredAsset === "updates" ? "hovered" : ""}`}
                 onMouseEnter={() => setHoveredAsset("updates")}
-                onMouseLeave={() => setHoveredAsset(null)}
                 onFocus={() => setHoveredAsset("updates")}
-                onBlur={() => setHoveredAsset(null)}
+                onClick={() => setHoveredAsset("updates")}
                 tabIndex={0}
               >
                 <div className="row-label">
@@ -393,6 +395,19 @@ export default function AssetsSection({ activePreset }: AssetsSectionProps) {
 
           {/* Desktop Preview Panel */}
           <div className={`asset-live-preview-card ${hoveredAsset ? "visible" : ""}`}>
+            <div className="mobile-drawer-handle" />
+            {hoveredAsset && (
+              <button 
+                className="preview-close-btn" 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setHoveredAsset(null);
+                }}
+                aria-label="Close Preview"
+              >
+                &times;
+              </button>
+            )}
             <div className="preview-card-inner">
               {renderPreviewContent() || (
                 <div className="preview-empty-state">

@@ -2214,11 +2214,11 @@ input {
   overflow: hidden;
 }
 .assets-card-wrapper.has-preview .output-card {
-  transform: translateX(-160px);
+  transform: none;
 }
 .assets-card-wrapper.has-preview .asset-live-preview-card {
   opacity: 1;
-  transform: translateX(45px) scale(1);
+  transform: translateX(205px) scale(1);
   pointer-events: auto;
 }
 .preview-card-inner {
@@ -2516,6 +2516,49 @@ input {
   .preview-card-inner {
     padding-top: 40px;
     justify-content: flex-start;
+  }
+  .mobile-drawer-handle {
+    display: block;
+    width: 42px;
+    height: 5px;
+    background-color: var(--border-color);
+    border-radius: var(--radius-pill);
+    margin: 8px auto 0 auto;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 11;
+  }
+  .preview-close-btn {
+    top: 10px !important;
+    right: 10px !important;
+    width: 32px !important;
+    height: 32px !important;
+    font-size: 18px !important;
+  }
+}
+
+.preview-mobile-backdrop {
+  display: none;
+}
+@media (max-width: 768px) {
+  .preview-mobile-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1040;
+    animation: fadeInBackdrop 0.3s ease;
+  }
+  @keyframes fadeInBackdrop {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
 
