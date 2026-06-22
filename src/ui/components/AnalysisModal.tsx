@@ -65,6 +65,7 @@ export default function AnalysisModal({
     <div className="analysis-modal active" id="analysis-modal">
       <div className="modal-overlay" onClick={onClose}></div>
       <div className="modal-content">
+        <div className="modal-drag-handle"></div>
         <button className="modal-close" onClick={onClose} id="modal-close-btn">
           &times;
         </button>

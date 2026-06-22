@@ -7,6 +7,8 @@ import AssetsSection from "@/ui/components/AssetsSection";
 import HowItWorks from "@/ui/components/HowItWorks";
 import SeoGeoSection from "@/ui/components/SeoGeoSection";
 import LocalSection from "@/ui/components/LocalSection";
+import Pricing from "@/ui/components/Pricing";
+import Faq from "@/ui/components/Faq";
 import FooterCta from "@/ui/components/FooterCta";
 import Footer from "@/ui/components/Footer";
 import AnalysisModal from "@/ui/components/AnalysisModal";
@@ -107,6 +109,10 @@ export default function Home() {
         <SeoGeoSection activePreset={activePreset} />
         
         <LocalSection activePreset={activePreset} />
+
+        <Pricing />
+
+        <Faq />
         
         <FooterCta
           domainInput={domainInput}
