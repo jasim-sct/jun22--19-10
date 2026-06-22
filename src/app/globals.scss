@@ -892,7 +892,8 @@ input {
 }
 
 .seo-geo-section {
-  background-color: #FFFFFF;
+  background-color: #EBF3FC; /* Trusted soft light blue shade */
+  padding: 80px 0;
 }
 
 .section-header-centered {
@@ -2214,11 +2215,11 @@ input {
   overflow: hidden;
 }
 .assets-card-wrapper.has-preview .output-card {
-  transform: none;
+  transform: translateX(-160px);
 }
 .assets-card-wrapper.has-preview .asset-live-preview-card {
   opacity: 1;
-  transform: translateX(205px) scale(1);
+  transform: translateX(45px) scale(1);
   pointer-events: auto;
 }
 .preview-card-inner {
