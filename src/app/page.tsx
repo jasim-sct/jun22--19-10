@@ -1,66 +1,127 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+
+import React, { useState } from "react";
+import Navbar from "@/ui/components/Navbar";
+import Hero from "@/ui/components/Hero";
+import AssetsSection from "@/ui/components/AssetsSection";
+import HowItWorks from "@/ui/components/HowItWorks";
+import SeoGeoSection from "@/ui/components/SeoGeoSection";
+import LocalSection from "@/ui/components/LocalSection";
+import FooterCta from "@/ui/components/FooterCta";
+import Footer from "@/ui/components/Footer";
+import AnalysisModal from "@/ui/components/AnalysisModal";
+import { Preset, PRESETS } from "@/ui/components/types";
 
 export default function Home() {
+  const [domainInput, setDomainInput] = useState("");
+  const [activePreset, setActivePreset] = useState<Preset>(PRESETS["default"]);
+  const [animationPreset, setAnimationPreset] = useState<Preset>(PRESETS["default"]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Triggered when an example tag is clicked (direct feedback)
+  const triggerCountAnimation = (preset: Preset) => {
+    setActivePreset(preset);
+    setAnimationPreset(preset);
+  };
+
+  const startAnalysis = () => {
+    const domain = domainInput.trim() || "yourbusiness.com";
+    
+    // Find preset or generate custom one
+    let matchedPreset = PRESETS["default"];
+    let found = false;
+    for (const key in PRESETS) {
+      if (key !== "default" && domain.toLowerCase().includes(key.split(".")[0])) {
+        matchedPreset = PRESETS[key];
+        found = true;
+        break;
+      }
+    }
+
+    if (!found && domain !== "yourbusiness.com") {
+      const parts = domain.split(".");
+      const cleanName = parts[0].charAt(0).toUpperCase() + parts[0].slice(1);
+      
+      const seo = Math.floor(Math.random() * 10) + 4;
+      const blog = Math.floor(Math.random() * 8) + 3;
+      const linkedin = Math.floor(Math.random() * 12) + 2;
+      const instagram = Math.floor(Math.random() * 15) + 3;
+      const replies = Math.floor(Math.random() * 8) + 2;
+      const faqs = Math.floor(Math.random() * 10) + 5;
+      const updates = Math.floor(Math.random() * 6) + 2;
+      const total = seo + blog + linkedin + instagram + replies + faqs + updates;
+
+      matchedPreset = {
+        domain: domain,
+        name: `${cleanName} & Co.`,
+        type: `Business · Austin, TX`,
+        seo,
+        blog,
+        linkedin,
+        instagram,
+        replies,
+        faqs,
+        updates,
+        total,
+      };
+    }
+
+    setActivePreset(matchedPreset);
+    setIsModalOpen(true);
+  };
+
+  const handleViewPlan = () => {
+    setIsModalOpen(false);
+    
+    // Scroll to the assets section
+    const assetsSection = document.querySelector(".assets-section");
+    if (assetsSection) {
+      assetsSection.scrollIntoView({ behavior: "smooth", block: "center" });
+      
+      // Delay updating count display until scroll completes
+      setTimeout(() => {
+        setAnimationPreset(activePreset);
+      }, 600);
+    } else {
+      setAnimationPreset(activePreset);
+    }
+  };
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <>
+      <Navbar />
+      <main>
+        <Hero
+          domainInput={domainInput}
+          setDomainInput={setDomainInput}
+          activePreset={activePreset}
+          setActivePreset={setActivePreset}
+          startAnalysis={startAnalysis}
+          triggerCountAnimation={triggerCountAnimation}
         />
-        <div className={styles.intro}>
-          <h1>To get started, edit the page.tsx file.</h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+        
+        <AssetsSection activePreset={animationPreset} />
+        
+        <HowItWorks />
+        
+        <SeoGeoSection activePreset={activePreset} />
+        
+        <LocalSection activePreset={activePreset} />
+        
+        <FooterCta
+          domainInput={domainInput}
+          setDomainInput={setDomainInput}
+          startAnalysis={startAnalysis}
+        />
       </main>
-    </div>
+      <Footer />
+
+      <AnalysisModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        domain={activePreset.domain}
+        onViewPlan={handleViewPlan}
+      />
+    </>
   );
 }
