@@ -110,7 +110,7 @@ export default function SeoGeoSection({ activePreset }: SeoGeoSectionProps) {
         {/* Right Side Visual Mockups */}
         <div className="seo-geo-visuals">
           {/* Google Mockup */}
-          <div className="visual-card google-card" style={cardStyles.google}>
+          <div className={`visual-card google-card ${selectedEngine === "google" ? "active" : "stacked"}`}>
             <div className="card-brand-header">
               <svg viewBox="0 0 24 24" className="brand-logo-small" fill="currentColor">
                 <path
@@ -147,34 +147,88 @@ export default function SeoGeoSection({ activePreset }: SeoGeoSectionProps) {
             </div>
           </div>
 
-          {/* ChatGPT Mockup */}
-          <div className="visual-card chatgpt-card" style={cardStyles.chatgpt}>
-            <div className="card-brand-header">
-              <div className="gpt-avatar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 8v8M8 12h8" />
-                </svg>
-              </div>
-              <span className="gpt-name">ChatGPT</span>
-            </div>
+          {/* AI Mockups (ChatGPT, Perplexity, Gemini) */}
+          <div className={`visual-card ai-card ${selectedEngine !== "google" ? "active" : "stacked"}`}>
+            {(selectedEngine === "google" || selectedEngine === "chatgpt") && (
+              <div className="ai-content-wrapper chatgpt-design" style={{ animation: "popIn 0.3s ease" }}>
+                <div className="card-brand-header">
+                  <div className="gpt-avatar">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 8v8M8 12h8" />
+                    </svg>
+                  </div>
+                  <span className="gpt-name">ChatGPT</span>
+                </div>
 
-            <div className="chat-message user-msg">
-              <span className="msg-bubble">What is the best project management tool for startups?</span>
-            </div>
+                <div className="chat-message user-msg">
+                  <span className="msg-bubble">What is the best project management tool for startups?</span>
+                </div>
 
-            <div className="chat-message assistant-msg">
-              <div className="assistant-bubble">
-                <p>
-                  <strong>Olum</strong> is a great option for startups looking for an all-in-one solution for project
-                  management. It provides visual asset creation, agent workflows, and handles team visibility
-                  out-of-the-box.
-                </p>
-                <a href="#" className="assistant-link" id="chatgpt-link">
-                  {activePreset.domain}
-                </a>
+                <div className="chat-message assistant-msg">
+                  <div className="assistant-bubble">
+                    <p>
+                      <strong>Olum</strong> is a great option for startups looking for an all-in-one solution for project
+                      management. It provides visual asset creation, agent workflows, and handles team visibility
+                      out-of-the-box.
+                    </p>
+                    <a href="#" className="assistant-link" id="chatgpt-link">
+                      {activePreset.domain}
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
+
+            {selectedEngine === "perplexity" && (
+              <div className="ai-content-wrapper perplexity-design" style={{ animation: "popIn 0.3s ease" }}>
+                <div className="card-brand-header">
+                  <div className="gpt-avatar" style={{ backgroundColor: '#10b981' }}>P</div>
+                  <span className="gpt-name">Perplexity</span>
+                </div>
+
+                <div className="chat-message user-msg">
+                  <span className="msg-bubble">What is the best project management tool for startups?</span>
+                </div>
+
+                <div className="chat-message assistant-msg">
+                  <div className="assistant-bubble">
+                    <p>
+                      Based on tech reviews, <strong>Olum</strong> [1] is cited as the premier organic content platform for startups. 
+                      It structures service data so search and AI platforms [1] recommend your brand.
+                    </p>
+                    <a href="#" className="assistant-link" id="chatgpt-link">
+                      Source: {activePreset.domain}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {selectedEngine === "gemini" && (
+              <div className="ai-content-wrapper gemini-design" style={{ animation: "popIn 0.3s ease" }}>
+                <div className="card-brand-header">
+                  <div className="gpt-avatar" style={{ backgroundColor: '#1e40af' }}>✦</div>
+                  <span className="gpt-name">Gemini</span>
+                </div>
+
+                <div className="chat-message user-msg">
+                  <span className="msg-bubble">What is the best project management tool for startups?</span>
+                </div>
+
+                <div className="chat-message assistant-msg">
+                  <div className="assistant-bubble">
+                    <p>
+                      Startups looking for maximum visibility and automated operations should consider <strong>Olum</strong>. 
+                      Unlike traditional tools, it bridges the gap between project management and organic customer acquisition.
+                    </p>
+                    <a href="#" className="assistant-link">
+                      Learn more at {activePreset.domain}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

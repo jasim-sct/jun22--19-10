@@ -9,6 +9,23 @@ interface LocalSectionProps {
 
 export default function LocalSection({ activePreset }: LocalSectionProps) {
   const [isMapDetailsVisible, setIsMapDetailsVisible] = useState(true);
+  const [tasks, setTasks] = useState([
+    { id: 1, text: "Publish 1 GBP post", checked: true },
+    { id: 2, text: "Reply to 5 reviews", checked: true },
+    { id: 3, text: "Add 4 FAQs to website", checked: false },
+    { id: 4, text: "Create 2 Instagram posts", checked: true },
+    { id: 5, text: "Add missing services", checked: false },
+  ]);
+
+  const toggleTask = (index: number) => {
+    const newTasks = [...tasks];
+    newTasks[index].checked = !newTasks[index].checked;
+    setTasks(newTasks);
+  };
+
+  const completedCount = tasks.filter(t => t.checked).length;
+  const rating = (4.4 + completedCount * 0.1).toFixed(1);
+  const reviews = 200 + completedCount * 3;
 
   return (
     <section className="local-section" id="local-businesses">
@@ -102,7 +119,11 @@ export default function LocalSection({ activePreset }: LocalSectionProps) {
 
                 {/* Red pin marker */}
                 <g transform="translate(220, 120)">
-                  <path d="M 0,0 C -4,-4 -6,-9 -6,-13 C -6,-19.6 0,-24 0,-24 C 0,-24 6,-19.6 6,-13 C 6,-9 4,-4 0,0 Z" fill="#EF4444" />
+                  <path
+                    d="M 0,0 C -4,-4 -6,-9 -6,-13 C -6,-19.6 0,-24 0,-24 C 0,-24 6,-19.6 6,-13 C 6,-9 4,-4 0,0 Z"
+                    fill={tasks[4].checked ? "#10B981" : "#EF4444"}
+                    style={{ transition: "fill 0.3s ease" }}
+                  />
                   <circle cx="0" cy="-13" r="2.5" fill="#FFFFFF" />
                 </g>
 
@@ -132,15 +153,17 @@ export default function LocalSection({ activePreset }: LocalSectionProps) {
                 </div>
 
                 <div className="map-rating">
-                  <span className="rating-num">4.8</span>
+                  <span className="rating-num" key={rating} style={{ display: "inline-block", animation: "popIn 0.3s ease" }}>
+                    {rating}
+                  </span>
                   <div className="stars">
                     <span className="star-fill">★</span>
                     <span className="star-fill">★</span>
                     <span className="star-fill">★</span>
                     <span className="star-fill">★</span>
-                    <span className="star-fill">★</span>
+                    <span className={`star-fill ${completedCount < 5 ? "star-empty" : ""}`}>★</span>
                   </div>
-                  <span className="review-count">(215)</span>
+                  <span className="review-count">({reviews})</span>
                 </div>
 
                 <span className="map-type" id="local-business-type">
@@ -165,35 +188,17 @@ export default function LocalSection({ activePreset }: LocalSectionProps) {
             <span className="actions-title">This week's local actions</span>
 
             <div className="actions-list">
-              <label className="action-item">
-                <input type="checkbox" defaultChecked disabled />
-                <span className="custom-checkbox"></span>
-                <span className="action-text">Publish 1 GBP post</span>
-              </label>
-
-              <label className="action-item">
-                <input type="checkbox" defaultChecked disabled />
-                <span className="custom-checkbox"></span>
-                <span className="action-text">Reply to 5 reviews</span>
-              </label>
-
-              <label className="action-item">
-                <input type="checkbox" defaultChecked disabled />
-                <span className="custom-checkbox"></span>
-                <span className="action-text">Add 4 FAQs to website</span>
-              </label>
-
-              <label className="action-item">
-                <input type="checkbox" defaultChecked disabled />
-                <span className="custom-checkbox"></span>
-                <span className="action-text">Create 2 Instagram posts</span>
-              </label>
-
-              <label className="action-item">
-                <input type="checkbox" defaultChecked disabled />
-                <span className="custom-checkbox"></span>
-                <span className="action-text">Add missing services</span>
-              </label>
+              {tasks.map((task, idx) => (
+                <label key={task.id} className="action-item">
+                  <input
+                    type="checkbox"
+                    checked={task.checked}
+                    onChange={() => toggleTask(idx)}
+                  />
+                  <span className="custom-checkbox"></span>
+                  <span className="action-text">{task.text}</span>
+                </label>
+              ))}
             </div>
           </div>
         </div>

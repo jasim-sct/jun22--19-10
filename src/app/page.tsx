@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Navbar from "@/ui/components/Navbar";
 import Hero from "@/ui/components/Hero";
+import KpiWidget from "@/ui/components/KpiWidget";
 import AssetsSection from "@/ui/components/AssetsSection";
 import HowItWorks from "@/ui/components/HowItWorks";
 import SeoGeoSection from "@/ui/components/SeoGeoSection";
@@ -101,6 +102,8 @@ export default function Home() {
           startAnalysis={startAnalysis}
           triggerCountAnimation={triggerCountAnimation}
         />
+        
+        <KpiWidget activePreset={activePreset} />
         
         <AssetsSection activePreset={animationPreset} />
         
